@@ -16,6 +16,7 @@ use PhpAmqpLib\Wire\AMQPTable;
 
 /**
  * @method ConsumerMessage getQueue()
+ * @property string $deadLetterExchange
  */
 trait ConsumerDelayedMessageTrait
 {
@@ -28,8 +29,11 @@ trait ConsumerDelayedMessageTrait
             ->setArguments(new AMQPTable(['x-dead-letter-exchange' => $this->getDeadLetterExchange()]));
     }
 
+    /**
+     * @return string
+     */
     protected function getDeadLetterExchange(): string
     {
-        return 'delayed';
+        return $this->deadLetterExchange ?? 'delayed';
     }
 }
